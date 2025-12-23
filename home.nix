@@ -38,9 +38,11 @@
   # Git
   programs.git = {
     enable = true;
-    userName = "Ruben Hutter";
-    userEmail = "ruben.hutter@rubenhutter.ch";
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Ruben Hutter";
+        email = "ruben.hutter@rubenhutter.ch";
+      };
       init.defaultBranch = "main";
       pull.rebase = false;
     };
