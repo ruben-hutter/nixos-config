@@ -72,11 +72,9 @@
 
   # === FONTS ===
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [
-      "FiraCode"
-      "JetBrainsMono"
-      "Meslo"
-    ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.meslo-lg
   ];
 
   # === NIX SETTINGS ===
