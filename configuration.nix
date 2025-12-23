@@ -59,7 +59,10 @@
     isNormalUser = true;
     description = "ruben";
     extraGroups = [ "networkmanager" "wheel" ];
+    shell = pkgs.fish;
   };
+
+  programs.fish.enable = true;
 
   # === SYSTEM PACKAGES (minimal - only essential system tools) ===
   environment.systemPackages = with pkgs; [

@@ -7,6 +7,18 @@
 
   # === PACKAGES ===
   home.packages = with pkgs; [
+    # Terminal & Shell
+    alacritty
+    fastfetch
+    neovim
+    starship
+    tmux
+
+    # Dev Tools
+    gcc
+    lua
+
+    # Utilities
     htop
     btop
     wget
@@ -14,26 +26,14 @@
     tree
     ripgrep
     fd
+
+    # Others
     firefox
     vlc
     libreoffice
   ];
 
   # === PROGRAMS (with configuration) ===
-  
-  # Neovim
-  programs.neovim = {
-    enable = true;
-    viAlias = true;
-    vimAlias = true;
-    defaultEditor = true;
-    
-    # You can add plugins later like:
-    # plugins = with pkgs.vimPlugins; [
-    #   vim-nix
-    #   nvim-treesitter
-    # ];
-  };
 
   # Git
   programs.git = {
@@ -48,18 +48,7 @@
     };
   };
 
-  # Firefox (configured via home-manager)
-  programs.firefox = {
-    enable = true;
-    # You can add profiles and settings here:
-    # profiles.ruben = {
-    #   settings = {
-    #     "browser.startup.homepage" = "https://nixos.org";
-    #   };
-    # };
-  };
-
-  # Bash (or switch to zsh/fish later)
+  # Bash
   programs.bash = {
     enable = true;
     shellAliases = {
@@ -69,11 +58,34 @@
     };
   };
 
+  # Fish
+  programs.fish.enable = true;
+
   home.file = {
-    # # Building this configuration will create a copy of 'dotfiles/screenrc' in
-    # # the Nix store. Activating the configuration will then make '~/.screenrc' a
-    # # symlink to the Nix store copy.
-    # ".screenrc".source = dotfiles/screenrc;
+    # Fish
+    #".config/fish".source =
+    #config.lib.file.mkOutOfStoreSymlink
+    #"${config.home.homeDirectory}/dotfiles/.config/fish";
+
+    # Neovim
+    ".config/nvim".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/.config/nvim";
+
+    # Tmux
+    ".tmux.conf".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/.tmux.conf";
+
+    # Starship
+    ".config/starship.toml".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/.config/starship.toml";
+
+    # Scripts
+    "scripts".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/scripts";
   };
 
   # === SESSION VARIABLES ===
