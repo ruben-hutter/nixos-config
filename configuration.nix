@@ -70,6 +70,15 @@
     vim  # Minimal emergency editor
   ];
 
+  # === FONTS ===
+  fonts.packages = with pkgs; [
+    (nerdfonts.override { fonts = [
+      "FiraCode"
+      "JetBrainsMono"
+      "Meslo"
+    ]; })
+  ];
+
   # === NIX SETTINGS ===
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];

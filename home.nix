@@ -17,6 +17,7 @@
     # Dev Tools
     gcc
     lua
+    distrobox
 
     # Utilities
     htop
@@ -63,9 +64,9 @@
 
   home.file = {
     # Fish
-    #".config/fish".source =
-    #config.lib.file.mkOutOfStoreSymlink
-    #"${config.home.homeDirectory}/dotfiles/.config/fish";
+    ".config/fish".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${config.home.homeDirectory}/dotfiles/.config/fish";
 
     # Neovim
     ".config/nvim".source =
