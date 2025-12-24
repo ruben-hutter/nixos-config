@@ -32,6 +32,7 @@
     unzip
 
     # Others
+    bitwarden-desktop
     firefox
     vlc
     libreoffice

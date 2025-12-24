@@ -91,20 +91,13 @@
     };
   };
 
-  # Environment variables (fish-specific)
-  home.sessionVariables = {
-    SSH_AUTH_SOCK = "$HOME/.var/app/com.bitwarden.desktop/data/.bitwarden-ssh-agent.sock";
-    PNPM_HOME = "$HOME/.local/share/pnpm";
-  };
-
   # PATH additions
   home.sessionPath = [
     "$HOME/.local/bin"
-    "$HOME/go/bin"
-    "$HOME/.ghcup/bin"
-    "$HOME/.cabal/bin"
-    "$HOME/.local/share/pnpm"
-    "$HOME/.opencode/bin"
+    #"$HOME/go/bin"
+    #"$HOME/.ghcup/bin"
+    #"$HOME/.cabal/bin"
+    #"$HOME/.opencode/bin"
   ];
 
   # Enable direnv with Nix integration
