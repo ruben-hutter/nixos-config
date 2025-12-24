@@ -1,0 +1,146 @@
+{ config, lib, pkgs, ... }:
+
+{
+  # Enable the uinput module
+  boot.kernelModules = [ "uinput" ];
+
+  # Enable uinput
+  hardware.uinput.enable = true;
+
+  # Set up udev rules for uinput
+  services.udev.extraRules = ''
+    KERNEL=="uinput", MODE="0660", GROUP="uinput", OPTIONS+="static_node=uinput"
+  '';
+
+  # Ensure the uinput group exists
+  users.groups.uinput = { };
+
+  # Add the Kanata service user to necessary groups
+  systemd.services.kanata-internalKeyboard.serviceConfig = {
+    SupplementaryGroups = [
+      "input"
+      "uinput"
+    ];
+  };
+
+  services.kanata = {
+    enable = true;
+    keyboards = {
+      internalKeyboard = {
+        devices = [
+          # Replace the paths below with the appropriate device paths for your setup.
+          # Use `ls /dev/input/by-path/` to find your keyboard devices.
+          "/dev/input/by-path/platform-i8042-serio-0-event-kbd"
+          "/dev/input/by-path/pci-0000:00:14.0-usb-0:14:1.0-event-kbd"
+        ];
+        extraDefCfg = ''
+          process-unmapped-keys yes
+          log-layer-changes no
+        '';
+        config = ''
+          ;; ============================================================
+          ;; Source - Physical key positions
+          ;; ============================================================
+          ;; These represent the PHYSICAL keys, not the symbols on them
+          (defsrc
+            esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+            tab  q    w    e    r    t    z    u    i    o    p    [    ]
+            caps a    s    d    f    g    h    j    k    l    ;    '    \    ret
+            lsft 102d y    x    c    v    b    n    m    ,    .    /    rsft
+            lctl lmet lalt           spc            ralt rmet rctl
+          )
+
+          ;; ============================================================
+          ;; Variables - Timing configuration
+          ;; ============================================================
+          (defvar
+            ;; Tap-hold timing
+            tap-time 150
+            hold-time 150
+          )
+
+          ;; ============================================================
+          ;; Aliases - Home Row Mods
+          ;; ============================================================
+          (defalias
+            ;; Left hand home row mods (Shift, Ctrl, Meta/Win, Alt)
+            a-sft (tap-hold $tap-time $hold-time a lsft)
+            s-ctl (tap-hold $tap-time $hold-time s lctl)
+            d-met (tap-hold $tap-time $hold-time d lmet)
+            f-alt (tap-hold $tap-time $hold-time f lalt)
+
+            ;; Right hand home row mods (Alt, Meta/Win, Ctrl, Shift)
+            j-alt (tap-hold $tap-time $hold-time j ralt)
+            k-met (tap-hold $tap-time $hold-time k rmet)
+            l-ctl (tap-hold $tap-time $hold-time l rctl)
+            ;; This is the physical key where é are (semicolon scancode)
+            é-sft (tap-hold $tap-time $hold-time ; rsft)
+
+            ;; caps:escape_shifted_capslock option
+            cap-esc (fork esc caps (lsft rsft))
+
+            ;; Layer access
+            spc-cod (tap-hold $tap-time $hold-time spc (layer-while-held coding))
+            cap-arw (tap-hold $tap-time $hold-time @cap-esc (layer-while-held arrows))
+
+            ;; Symbols mapping on coding layer
+            /\ (fork S-7 (unmod ralt <) (lsft rsft))
+            !? (fork S-] S-- (lsft rsft))
+            *% (fork S-3 S-5 (lsft rsft))
+            pls S-1
+            xor (macro = spc)
+            eq S-0
+            tld (macro RA-= spc)
+            and S-6
+            or RA-7
+            hsh RA-3
+            dlr \
+            sqt -
+            dqt S-2
+            btk (macro S-= spc)
+
+            ;; Live reload - press this to reload config
+            rld lrld
+          )
+
+          ;; ============================================================
+          ;; Layer: Base (with home row mods)
+          ;; ============================================================
+          ;; This layer just passes through most keys to your OS keyboard layout
+          ;; Your OS handles whether you get é, etc.
+          (deflayer base
+            esc  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+            tab  q    w    e    r    t    z    u    i    o    p    [    ]
+            @cap-esc @a-sft @s-ctl @d-met @f-alt g    h    @j-alt @k-met @l-ctl @é-sft ' \ ret
+            lsft 102d y    x    c    v    b    n    m    ,    .    /    rsft
+            lctl lmet ralt           @spc-cod            lalt rmet rctl
+          )
+
+          ;; ============================================================
+          ;; Layer: Coding
+          ;; Activated by holding space
+          ;; ============================================================
+          (deflayer coding
+            @rld f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12  del
+            _    @!?  @dqt @eq  _    @tld _    _    @sqt @or  @pls @btk _
+            _    @and RA-' RA-[ S-8  _    @hsh S-9  RA-] RA-\ @/\  @dlr _    _
+            _    _    _    @xor _    _    _    _    @*%  _    _    _    _
+            _    _    _              _              _    _    _
+          )
+
+          ;; ============================================================
+          ;; Layer: Arrows
+          ;; Activated by holding capslock
+          ;; ============================================================
+          (deflayer arrows
+            _    _    _    _    _    _    _    _    _    _    _    _    _    _
+            _    _    _    _    _    _    _    _    _    _    _    _    _
+            _    _    _    _    _    _    _    left down up   rght _    _    _
+            _    _    _    _    _    _    _    _    _    _    _    _    _
+            _    _    _              _              _    _    _
+          )
+        '';
+      };
+    };
+  };
+}

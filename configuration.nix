@@ -3,6 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./kanata.nix
   ];
 
   # === BOOT ===

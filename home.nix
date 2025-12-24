@@ -13,6 +13,7 @@
     neovim
     starship
     tmux
+    claude-code
 
     # Dev Tools
     gcc
@@ -63,30 +64,30 @@
   programs.fish.enable = true;
 
   home.file = {
-    # Fish
-    ".config/fish".source =
-    config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/.config/fish";
+    ## Fish
+    #".config/fish".source =
+    #config.lib.file.mkOutOfStoreSymlink
+    #"${config.home.homeDirectory}/dotfiles/.config/fish";
 
-    # Neovim
-    ".config/nvim".source =
-    config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/.config/nvim";
+    ## Neovim
+    #".config/nvim".source =
+    #config.lib.file.mkOutOfStoreSymlink
+    #"${config.home.homeDirectory}/dotfiles/.config/nvim";
 
-    # Tmux
-    ".tmux.conf".source =
-    config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/.tmux.conf";
+    ## Tmux
+    #".tmux.conf".source =
+    #config.lib.file.mkOutOfStoreSymlink
+    #"${config.home.homeDirectory}/dotfiles/.tmux.conf";
 
-    # Starship
-    ".config/starship.toml".source =
-    config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/.config/starship.toml";
+    ## Starship
+    #".config/starship.toml".source =
+    #config.lib.file.mkOutOfStoreSymlink
+    #"${config.home.homeDirectory}/dotfiles/.config/starship.toml";
 
-    # Scripts
-    "scripts".source =
-    config.lib.file.mkOutOfStoreSymlink
-    "${config.home.homeDirectory}/dotfiles/scripts";
+    ## Scripts
+    #"scripts".source =
+    #config.lib.file.mkOutOfStoreSymlink
+    #"${config.home.homeDirectory}/dotfiles/scripts";
   };
 
   # === SESSION VARIABLES ===
