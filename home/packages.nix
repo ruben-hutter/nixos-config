@@ -12,6 +12,8 @@
     gcc
     lua
     distrobox
+    lazygit
+    yubikey-manager  # For ykman command
 
     # Utilities
     htop

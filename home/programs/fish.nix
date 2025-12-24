@@ -22,11 +22,73 @@
     };
 
     shellAliases = {
-      # Aliases can be added here
+      # List
+      ls = "ls --color=auto";
+      la = "ls -a";
+      ll = "ls -la";
+      l = "ls";
+
+      # Fix typos
+      "cd.." = "cd ..";
+      clera = "clear";
+
+      # Colorize grep
+      grep = "grep --color=auto";
+      egrep = "egrep --color=auto";
+      fgrep = "fgrep --color=auto";
+
+      # Readable output
+      df = "df -h";
+      free = "free -mt";
+
+      # NixOS system management
+      rebuild = "sudo nixos-rebuild switch --flake ~/nixos-config#nixos";
+      update = "cd ~/nixos-config && nix flake update && rebuild";
+
+      # Yubikey
+      ykcode = "ykman oath accounts code";
+
+      # Neovim
+      nv = "nvim";
+
+      # Scripts
+      tm = "~/scripts/tmux_session_manager.sh";
+      nn = "~/scripts/new_note.sh";
+
+      # Lazygit
+      lg = "lazygit";
+      conflg = "lazygit --git-dir $HOME/dotfiles/.git --work-tree $HOME/dotfiles";
     };
 
     functions = {
-      fish_user_key_bindings = "fish_vi_key_bindings";
+      # Vi key bindings with cursor shapes
+      fish_user_key_bindings = ''
+        fish_vi_key_bindings
+
+        # Vim-like cursor shapes
+        set fish_cursor_default block
+        set fish_cursor_insert line
+        set fish_cursor_replace_one underscore
+        set fish_cursor_replace underscore
+        set fish_cursor_external line
+        set fish_cursor_visual block
+      '';
+
+      # Generate gitignore from toptal API
+      gi = ''
+        curl -sL https://www.toptal.com/developers/gitignore/api/$argv
+      '';
+
+      # Activate Python virtualenv
+      venv = ''
+        if test -f .venv/bin/activate.fish
+          source .venv/bin/activate.fish
+        else if test -f $HOME/.venv/bin/activate.fish
+          source $HOME/.venv/bin/activate.fish
+        else
+          echo "No virtualenv found"
+        end
+      '';
     };
   };
 
