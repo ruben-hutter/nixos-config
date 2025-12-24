@@ -6,8 +6,6 @@
     alacritty
     fastfetch
     neovim
-    starship
-    tmux
     claude-code
 
     # Dev Tools

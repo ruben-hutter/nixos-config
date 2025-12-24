@@ -19,6 +19,9 @@
 
     # Services
     ../../modules/services/kanata.nix
+
+    # Virtualisation
+    ../../modules/virtualisation.nix
   ];
 
   # This value determines the NixOS release from which the default
