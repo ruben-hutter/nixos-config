@@ -13,7 +13,13 @@
     lua
     distrobox
     lazygit
-    yubikey-manager  # For ykman command
+    yubikey-manager
+    nodejs
+    python3
+    tree
+    rustup
+    go
+    typst
 
     # Utilities
     htop
@@ -23,6 +29,7 @@
     tree
     ripgrep
     fd
+    unzip
 
     # Others
     firefox
