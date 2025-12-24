@@ -7,9 +7,9 @@
     ./programs/bash.nix
     ./programs/fish.nix
     ./programs/starship.nix
+    ./programs/tmux.nix
     # Comment out for incremental testing
     # ./programs/neovim.nix
-    # ./programs/tmux.nix
   ];
 
   home.username = "ruben";
