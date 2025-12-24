@@ -1,21 +1,20 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  # Automatically find all files in the scripts directory
+  scriptsDir = ./scripts;
+  scriptFiles = builtins.attrNames (builtins.readDir scriptsDir);
+in
 {
-  # Install scripts to ~/scripts/
-  home.file = {
-    "scripts/tmux_session_manager.sh" = {
-      source = ./scripts/tmux_session_manager.sh;
-      executable = true;
-    };
-
-    "scripts/cht.sh" = {
-      source = ./scripts/cht.sh;
-      executable = true;
-    };
-
-    "scripts/new_note.sh" = {
-      source = ./scripts/new_note.sh;
-      executable = true;
-    };
-  };
+  # Install all scripts from home/scripts/ to ~/scripts/
+  # Automatically makes them executable
+  home.file = builtins.listToAttrs (
+    map (script: {
+      name = "scripts/${script}";
+      value = {
+        source = scriptsDir + "/${script}";
+        executable = true;
+      };
+    }) scriptFiles
+  );
 }

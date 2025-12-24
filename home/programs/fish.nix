@@ -53,7 +53,6 @@
 
       # Scripts
       tm = "~/scripts/tmux_session_manager.sh";
-      nn = "~/scripts/new_note.sh";
 
       # Lazygit
       lg = "lazygit";
