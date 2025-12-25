@@ -101,6 +101,8 @@
         }
 
         mouse {
+            accel-profile "flat"
+            accel-speed -0.6
         }
 
         touch {
