@@ -2,24 +2,21 @@
 
 {
   home.packages = with pkgs; [
-    # Terminal & Shell
-    alacritty
-    fastfetch
-    neovim
-    claude-code
-
     # Dev Tools
-    gcc
-    lua
+    fastfetch
+    neovim # TODO: move to own file and add gcc, lua, nodejs? and all plugins dependencies there
+    claude-code
+    yubikey-manager
     distrobox
     lazygit
-    yubikey-manager
+    typst
+
+    gcc
+    lua
     nodejs
     python3
-    tree
     rustup
     go
-    typst
 
     # Utilities
     htop
@@ -30,9 +27,11 @@
     ripgrep
     fd
     unzip
+    brightnessctl
 
     # Others
     bitwarden-desktop
+    gnome-file-manager
     firefox
     vlc
     libreoffice

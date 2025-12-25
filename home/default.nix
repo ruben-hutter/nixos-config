@@ -5,11 +5,13 @@
     ./packages.nix
     ./scripts.nix
     ./programs/git.nix
+    ./programs/alacritty.nix
     ./programs/bash.nix
     ./programs/fish.nix
     ./programs/starship.nix
     ./programs/tmux.nix
     ./programs/neovim.nix
+    ./programs/niri.nix
   ];
 
   home.username = "ruben";

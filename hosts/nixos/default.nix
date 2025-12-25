@@ -13,7 +13,8 @@
     ../../modules/user.nix
 
     # Desktop environment
-    ../../modules/desktop/gnome.nix
+    #../../modules/desktop/gnome.nix
+    ../../modules/desktop/niri.nix
     ../../modules/desktop/sound.nix
     ../../modules/desktop/fonts.nix
 
