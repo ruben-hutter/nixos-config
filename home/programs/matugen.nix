@@ -106,8 +106,8 @@
   # Matugen template: Starship colors (copy from dotfiles if you update it)
   home.file.".config/matugen/templates/starship-colors.toml".text = ''
     format = '''
-    $directory$git_branch$rust$python
-    $character'''
+    ''$directory''$git_branch''$rust''$python
+    ''$character'''
 
     palette = 'colors'
 
@@ -130,8 +130,8 @@
     vicmd_symbol = "[<](#f9e2af)"
 
     [directory]
-    #format = "[](fg:color1 bg:color4)[󰉋](bg:color1 fg:color2)[ ](fg:color1 bg:color4)[$path ](fg:color3 bg:color4)[ ](fg:color4)"
-    format = "[󰉋 $path ](fg:color3)"
+    #format = "[](fg:color1 bg:color4)[󰉋](bg:color1 fg:color2)[ ](fg:color1 bg:color4)[''$path ](fg:color3 bg:color4)[ ](fg:color4)"
+    format = "[󰉋 ''$path ](fg:color3)"
 
     [directory.substitutions]
     "Documents" = "󰈙 "
@@ -141,7 +141,7 @@
 
     [git_branch]
     symbol = "git "
-    #format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) $branch](fg:color3 bg:color4)[](fg:color4) "
+    #format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ''$branch](fg:color3 bg:color4)[](fg:color4) "
 
     [git_commit]
     tag_symbol = " tag "
@@ -154,7 +154,7 @@
     deleted = "x"
 
     #[time]
-    #format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) $time](fg:color3 bg:color4)[](fg:color4) "
+    #format = "[](fg:color8 bg:color4)[ ](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5) ''$time](fg:color3 bg:color4)[](fg:color4) "
     #disabled = false
     #time_format = "%R" # Hour:Minute Format
 
@@ -297,7 +297,7 @@
 
     [python]
     symbol = "py "
-    #format = "[](fg:color8 bg:color4)[''${symbol}''${version}](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5)( ''${virtualenv})](fg:color3 bg:color4)[](fg:color4) "
+    #format = "[](fg:color8 bg:color4)[''''$''${symbol}''''$''${version}](bg:color8 fg:color5)[](fg:color8 bg:color4)[(bg:color8 fg:color5)( ''''$''${virtualenv})](fg:color3 bg:color4)[](fg:color4) "
     #symbol = '🐍'
     # pyenv_version_name = true
     pyenv_prefix = 'venv'
@@ -344,8 +344,8 @@
   # Matugen template: Hyprland colors
   home.file.".config/matugen/templates/hyprland-colors.conf".text = ''
     <* for name, value in colors *>
-    $image = {{image}}
-    ${{name}} = rgba({{value.default.hex_stripped}}ff)
+    ''$image = {{image}}
+    ''${{name}} = rgba({{value.default.hex_stripped}}ff)
     <* endfor *>
   '';
 }
