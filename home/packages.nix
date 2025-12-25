@@ -28,13 +28,20 @@
     fd
     unzip
     brightnessctl
+    wl-clipboard
 
-    # Themes and Icons
+    # Themes, Icons and Cursors
     bibata-cursors
     papirus-icon-theme
-    qt6Packages.qt6ct
     adwaita-icon-theme
+    qt6Packages.qt6ct
     matugen
+
+    # Fonts
+    inter
+    nerd-fonts.fira-code
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.meslo-lg
 
     # Others
     bitwarden-desktop

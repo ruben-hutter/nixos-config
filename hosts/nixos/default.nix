@@ -15,7 +15,6 @@
     # Desktop environment
     ../../modules/desktop/niri.nix
     ../../modules/desktop/sound.nix
-    ../../modules/desktop/fonts.nix
 
     # Services
     ../../modules/services/kanata.nix

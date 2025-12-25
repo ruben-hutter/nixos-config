@@ -20,6 +20,15 @@
   home.homeDirectory = "/home/ruben";
   home.stateVersion = "25.11";
 
+  # === CURSOR THEME ===
+  home.pointerCursor = {
+    name = "Bibata-Modern-Ice";
+    package = pkgs.bibata-cursors;
+    size = 22;
+    gtk.enable = true;
+    x11.enable = true;
+  };
+
   # === SESSION VARIABLES ===
   home.sessionVariables = {
     EDITOR = "nvim";
