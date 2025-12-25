@@ -1,4 +1,4 @@
-{ config, pkgs, dms, ... }:
+{ config, pkgs, lib, dms, ... }:
 
 let
   quickshell = dms.inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
@@ -10,8 +10,14 @@ in
     quickshell
   ];
 
-  # DMS settings
-  home.file.".config/DankMaterialShell/settings.json".text = builtins.toJSON {
+  # Write initial DMS settings, but only if not exists
+  # This allows DMS to modify the file later without permission issues
+  home.activation.dmsSettings = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    SETTINGS_FILE="$HOME/.config/DankMaterialShell/settings.json"
+    if [ ! -f "$SETTINGS_FILE" ]; then
+      $DRY_RUN_CMD mkdir -p "$HOME/.config/DankMaterialShell"
+      $DRY_RUN_CMD cat > "$SETTINGS_FILE" << 'EOF'
+${builtins.toJSON {
     currentThemeName = "cat-blue";
     customThemeFile = "";
     matugenScheme = "scheme-tonal-spot";
@@ -283,7 +289,11 @@ in
     ];
     configVersion = 4;
     desktopWidgetInstances = [];
-  };
+  }}
+EOF
+      echo "Created initial DMS settings"
+    fi
+  '';
 
   # DMS systemd service
   systemd.user.services.dms = {
