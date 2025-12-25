@@ -4,11 +4,288 @@ let
   quickshell = dms.inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in
 {
+  # Install DMS and quickshell
   home.packages = [
     dms.packages.${pkgs.stdenv.hostPlatform.system}.default
     quickshell
   ];
 
+  # DMS settings
+  home.file.".config/DankMaterialShell/settings.json".text = builtins.toJSON {
+    currentThemeName = "cat-blue";
+    customThemeFile = "";
+    matugenScheme = "scheme-tonal-spot";
+    runUserMatugenTemplates = true;
+    matugenTargetMonitor = "";
+    popupTransparency = 1;
+    dockTransparency = 1;
+    widgetBackgroundColor = "sch";
+    widgetColorMode = "default";
+    cornerRadius = 10;
+    use24HourClock = true;
+    showSeconds = false;
+    useFahrenheit = false;
+    nightModeEnabled = false;
+    animationSpeed = 1;
+    customAnimationDuration = 750;
+    wallpaperFillMode = "Fill";
+    blurredWallpaperLayer = false;
+    blurWallpaperOnOverview = true;
+    showLauncherButton = true;
+    showWorkspaceSwitcher = true;
+    showFocusedWindow = true;
+    showWeather = true;
+    showMusic = true;
+    showClipboard = true;
+    showCpuUsage = true;
+    showMemUsage = true;
+    showCpuTemp = true;
+    showGpuTemp = true;
+    selectedGpuIndex = 0;
+    enabledGpuPciIds = [];
+    showSystemTray = true;
+    showClock = true;
+    showNotificationButton = true;
+    showBattery = true;
+    showControlCenterButton = true;
+    showCapsLockIndicator = true;
+    controlCenterShowNetworkIcon = true;
+    controlCenterShowBluetoothIcon = true;
+    controlCenterShowAudioIcon = true;
+    controlCenterShowVpnIcon = false;
+    controlCenterShowBrightnessIcon = false;
+    controlCenterShowMicIcon = false;
+    controlCenterShowBatteryIcon = false;
+    controlCenterShowPrinterIcon = false;
+    showPrivacyButton = true;
+    privacyShowMicIcon = false;
+    privacyShowCameraIcon = false;
+    privacyShowScreenShareIcon = false;
+    controlCenterWidgets = [
+      { id = "volumeSlider"; enabled = true; width = 50; }
+      { id = "brightnessSlider"; enabled = true; width = 50; }
+      { id = "wifi"; enabled = true; width = 50; }
+      { id = "bluetooth"; enabled = true; width = 50; }
+      { id = "audioOutput"; enabled = true; width = 50; }
+      { id = "audioInput"; enabled = true; width = 50; }
+      { id = "nightMode"; enabled = true; width = 50; }
+      { id = "doNotDisturb"; enabled = true; width = 50; }
+    ];
+    showWorkspaceIndex = false;
+    showWorkspacePadding = false;
+    workspaceScrolling = false;
+    showWorkspaceApps = false;
+    maxWorkspaceIcons = 3;
+    workspacesPerMonitor = true;
+    showOccupiedWorkspacesOnly = true;
+    dwlShowAllTags = false;
+    workspaceNameIcons = {};
+    waveProgressEnabled = true;
+    scrollTitleEnabled = true;
+    audioVisualizerEnabled = true;
+    clockCompactMode = false;
+    focusedWindowCompactMode = true;
+    runningAppsCompactMode = true;
+    keyboardLayoutNameCompactMode = false;
+    runningAppsCurrentWorkspace = false;
+    runningAppsGroupByApp = false;
+    centeringMode = "index";
+    clockDateFormat = "";
+    lockDateFormat = "";
+    mediaSize = 1;
+    appLauncherViewMode = "list";
+    spotlightModalViewMode = "list";
+    sortAppsAlphabetically = false;
+    appLauncherGridColumns = 4;
+    spotlightCloseNiriOverview = true;
+    niriOverviewOverlayEnabled = true;
+    weatherLocation = "Lugano, Ticino";
+    weatherCoordinates = "46.0050102,8.9520281";
+    useAutoLocation = false;
+    weatherEnabled = false;
+    networkPreference = "wifi";
+    vpnLastConnected = "";
+    iconTheme = "System Default";
+    launcherLogoMode = "os";
+    launcherLogoCustomPath = "";
+    launcherLogoColorOverride = "";
+    launcherLogoColorInvertOnMode = false;
+    launcherLogoBrightness = 0.5;
+    launcherLogoContrast = 1;
+    launcherLogoSizeOffset = 0;
+    fontFamily = "Inter Variable";
+    monoFontFamily = "Fira Code";
+    fontWeight = 700;
+    fontScale = 1;
+    notepadUseMonospace = true;
+    notepadFontFamily = "";
+    notepadFontSize = 14;
+    notepadShowLineNumbers = false;
+    notepadTransparencyOverride = -1;
+    notepadLastCustomTransparency = 0.7;
+    soundsEnabled = true;
+    useSystemSoundTheme = false;
+    soundNewNotification = true;
+    soundVolumeChanged = true;
+    soundPluggedIn = true;
+    acMonitorTimeout = 900;
+    acLockTimeout = 600;
+    acSuspendTimeout = 1200;
+    acSuspendBehavior = 0;
+    acProfileName = "";
+    batteryMonitorTimeout = 1200;
+    batteryLockTimeout = 900;
+    batterySuspendTimeout = 1800;
+    batterySuspendBehavior = 0;
+    batteryProfileName = "";
+    lockBeforeSuspend = true;
+    loginctlLockIntegration = true;
+    fadeToLockEnabled = false;
+    fadeToLockGracePeriod = 5;
+    launchPrefix = "";
+    brightnessDevicePins = {};
+    wifiNetworkPins = {};
+    bluetoothDevicePins = {
+      preferredDevice = "A8:F5:E1:CE:09:61";
+    };
+    audioInputDevicePins = {};
+    audioOutputDevicePins = {
+      preferredOutput = "alsa_output.pci-0000_00_1f.3-platform-sof_sdw.HiFi__Speaker__sink";
+    };
+    gtkThemingEnabled = false;
+    qtThemingEnabled = false;
+    syncModeWithPortal = true;
+    terminalsAlwaysDark = false;
+    runDmsMatugenTemplates = true;
+    matugenTemplateGtk = true;
+    matugenTemplateNiri = true;
+    matugenTemplateQt5ct = true;
+    matugenTemplateQt6ct = true;
+    matugenTemplateFirefox = true;
+    matugenTemplatePywalfox = true;
+    matugenTemplateVesktop = true;
+    matugenTemplateGhostty = true;
+    matugenTemplateKitty = true;
+    matugenTemplateFoot = true;
+    matugenTemplateAlacritty = true;
+    matugenTemplateWezterm = true;
+    matugenTemplateDgop = true;
+    matugenTemplateKcolorscheme = true;
+    matugenTemplateVscode = true;
+    showDock = false;
+    dockAutoHide = false;
+    dockGroupByApp = false;
+    dockOpenOnOverview = false;
+    dockPosition = 1;
+    dockSpacing = 4;
+    dockBottomGap = 0;
+    dockMargin = 0;
+    dockIconSize = 40;
+    dockIndicatorStyle = "circle";
+    dockBorderEnabled = false;
+    dockBorderColor = "surfaceText";
+    dockBorderOpacity = 1;
+    dockBorderThickness = 1;
+    notificationOverlayEnabled = false;
+    modalDarkenBackground = true;
+    lockScreenShowPowerActions = true;
+    lockScreenShowSystemIcons = true;
+    lockScreenShowTime = true;
+    lockScreenShowDate = true;
+    lockScreenShowProfileImage = true;
+    lockScreenShowPasswordField = true;
+    enableFprint = false;
+    maxFprintTries = 3;
+    lockScreenActiveMonitor = "all";
+    lockScreenInactiveColor = "#000000";
+    hideBrightnessSlider = false;
+    notificationTimeoutLow = 5000;
+    notificationTimeoutNormal = 5000;
+    notificationTimeoutCritical = 0;
+    notificationPopupPosition = 0;
+    osdAlwaysShowValue = true;
+    osdPosition = 5;
+    osdVolumeEnabled = true;
+    osdMediaVolumeEnabled = true;
+    osdBrightnessEnabled = true;
+    osdIdleInhibitorEnabled = true;
+    osdMicMuteEnabled = true;
+    osdCapsLockEnabled = true;
+    osdPowerProfileEnabled = true;
+    osdAudioOutputEnabled = true;
+    powerActionConfirm = false;
+    powerActionHoldDuration = 1;
+    powerMenuActions = [ "reboot" "logout" "poweroff" "lock" "suspend" "restart" ];
+    powerMenuDefaultAction = "logout";
+    powerMenuGridLayout = false;
+    customPowerActionLock = "";
+    customPowerActionLogout = "";
+    customPowerActionSuspend = "";
+    customPowerActionHibernate = "";
+    customPowerActionReboot = "";
+    customPowerActionPowerOff = "";
+    updaterHideWidget = false;
+    updaterUseCustomCommand = false;
+    updaterCustomCommand = "";
+    updaterTerminalAdditionalParams = "";
+    displayNameMode = "system";
+    screenPreferences = {};
+    showOnLastDisplay = {};
+    barConfigs = [
+      {
+        id = "default";
+        name = "Main Bar";
+        enabled = true;
+        position = 0;
+        screenPreferences = [ "all" ];
+        showOnLastDisplay = true;
+        leftWidgets = [
+          { id = "launcherButton"; enabled = true; }
+          "workspaceSwitcher"
+          "focusedWindow"
+        ];
+        centerWidgets = [
+          { id = "music"; enabled = true; }
+          { id = "clock"; enabled = true; clockCompactMode = false; }
+        ];
+        rightWidgets = [
+          "systemTray"
+          "clipboard"
+          "cpuUsage"
+          { id = "memUsage"; enabled = true; showSwap = false; }
+          "notificationButton"
+          "battery"
+          "controlCenterButton"
+        ];
+        spacing = 4;
+        innerPadding = 4;
+        bottomGap = 0;
+        transparency = 0;
+        widgetTransparency = 0.6;
+        squareCorners = false;
+        noBackground = false;
+        gothCornersEnabled = false;
+        gothCornerRadiusOverride = false;
+        gothCornerRadiusValue = 12;
+        borderEnabled = false;
+        borderColor = "surfaceText";
+        borderOpacity = 1;
+        borderThickness = 1;
+        fontScale = 1;
+        autoHide = false;
+        autoHideDelay = 250;
+        openOnOverview = false;
+        visible = true;
+        popupGapsAuto = true;
+        popupGapsManual = 4;
+        widgetOutlineEnabled = false;
+      }
+    ];
+    configVersion = 4;
+    desktopWidgetInstances = [];
+  };
+
+  # DMS systemd service
   systemd.user.services.dms = {
     Unit = {
       Description = "DankMaterialShell";

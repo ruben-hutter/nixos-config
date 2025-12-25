@@ -13,6 +13,7 @@
     ./programs/neovim.nix
     ./programs/niri.nix
     ./programs/dms.nix
+    ./programs/matugen.nix
   ];
 
   home.username = "ruben";
