@@ -40,7 +40,24 @@
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "scripts": "scripts"
+      }
+    },
+    "scripts": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1766592456,
+        "narHash": "sha256-y3+7TuB3/nxLy0na/JZo9YTOJuxmtJRYczgS8npkUAg=",
+        "owner": "ruben-hutter",
+        "repo": "scripts",
+        "rev": "7f163c23c39c63e6e7a08164b8f078242a0b5124",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ruben-hutter",
+        "repo": "scripts",
+        "type": "github"
       }
     }
   },

@@ -1,8 +1,9 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, scripts, ... }:
 
 let
+  # Scripts from flake input (github:ruben-hutter/scripts)
+  scriptsDir = scripts;
   # Automatically find all files in the scripts directory
-  scriptsDir = ./scripts;
   scriptFiles = builtins.attrNames (builtins.readDir scriptsDir);
 in
 {
