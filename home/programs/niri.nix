@@ -1,11 +1,22 @@
 { config, pkgs, lib, ... }:
 
 {
+  # Main config file with includes
   home.file.".config/niri/config.kdl".text = ''
-    // Niri configuration
-    // https://github.com/YaLTeR/niri
+    include "conf/misc.kdl"
+    include "conf/autostart.kdl"
+    include "conf/input.kdl"
+    include "conf/output.kdl"
+    include "conf/layout.kdl"
+    include "conf/keybindings.kdl"
+    include "conf/windowrules.kdl"
+    include "conf/animations.kdl"
+    include "dms/colors.kdl"
+    include "dms/wpblur.kdl"
+  '';
 
-    // Environment variables
+  # Misc settings
+  home.file.".config/niri/conf/misc.kdl".text = ''
     environment {
         XDG_CURRENT_DESKTOP "niri"
         QT_QPA_PLATFORM "wayland"
@@ -16,13 +27,8 @@
         XCURSOR_SIZE "22"
     }
 
-    // Autostart applications
-    spawn-at-startup "${pkgs.tmux}/bin/tmux" "new-session" "-d"
-
-    // Prefer no client-side decorations
     prefer-no-csd
 
-    // Global window rules
     window-rule {
         geometry-corner-radius 10
         clip-to-geometry true
@@ -40,20 +46,6 @@
         place-within-backdrop true
     }
 
-    // Specific window rules
-    window-rule {
-        match app-id="lxqt-policykit-agent"
-        open-floating true
-        default-column-width { fixed 400; }
-        default-window-height { fixed 200; }
-    }
-
-    window-rule {
-        match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
-        default-floating-position x=10 y=10 relative-to="bottom-right"
-    }
-
-    // Overview settings
     overview {
         zoom 0.4
         workspace-shadow {
@@ -61,13 +53,6 @@
         }
     }
 
-    // Hotkey overlay
-    hotkey-overlay {
-        skip-at-startup
-        hide-not-bound
-    }
-
-    // Gestures
     gestures {
         dnd-edge-view-scroll {
             trigger-width 30
@@ -86,10 +71,21 @@
         }
     }
 
-    // Screenshot path
     screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+  '';
 
-    // Input configuration
+  # Autostart
+  home.file.".config/niri/conf/autostart.kdl".text = ''
+    spawn-at-startup "tmux" "new-session" "-d"
+
+    hotkey-overlay {
+        skip-at-startup
+        hide-not-bound
+    }
+  '';
+
+  # Input configuration
+  home.file.".config/niri/conf/input.kdl".text = ''
     input {
         keyboard {
             xkb {
@@ -117,8 +113,10 @@
         mod-key "Super"
         mod-key-nested "Alt"
     }
+  '';
 
-    // Output configuration
+  # Output configuration
+  home.file.".config/niri/conf/output.kdl".text = ''
     output "BOE 0x0CE0 Unknown" {
         scale 1.0
         position x=0 y=0
@@ -149,8 +147,10 @@
             }
         }
     }
+  '';
 
-    // Layout configuration
+  # Layout configuration
+  home.file.".config/niri/conf/layout.kdl".text = ''
     layout {
         gaps 16
         center-focused-column "never"
@@ -164,71 +164,73 @@
 
         default-column-width { proportion 0.5; }
 
-        // Focus ring
         focus-ring {
             width 2
-            active-color "#a5c8fe"
-            inactive-color "#8d9199"
+            active-color "#7fc8ff"
+            inactive-color "#505050"
         }
 
-        // Border
         border {
             width 4
-            active-color "#a5c8fe"
-            inactive-color "#8d9199"
-            urgent-color "#ffb4ab"
+            active-color "#ffc87f"
+            inactive-color "#505050"
+            urgent-color "#9b0000"
         }
 
-        // Shadows (disabled by default)
         shadow {
             softness 30
             spread 5
             offset x=0 y=5
-            color "#00000070"
+            color "#0007"
         }
 
         struts {
         }
-
-        background-color "transparent"
     }
+  '';
 
-    // Animations
-    animations {
-    }
-
-    // Keybindings
+  # Keybindings
+  home.file.".config/niri/conf/keybindings.kdl".text = ''
     binds {
         Mod+Shift+Q { show-hotkey-overlay; }
 
         Mod+Return hotkey-overlay-title="Open a Terminal: alacritty" {
-            spawn "${pkgs.alacritty}/bin/alacritty";
+            spawn "alacritty";
         }
         Mod+Shift+Return hotkey-overlay-title="Open a File Manager: nautilus" {
-            spawn "${pkgs.nautilus}/bin/nautilus";
+            spawn "nautilus";
+        }
+        Mod+D hotkey-overlay-title="Run an Application: dms-spotlight" {
+            spawn "dms" "ipc" "call" "spotlight" "toggle";
+        }
+        Mod+X hotkey-overlay-title="Open the Powermenu: dms-powermenu" {
+            spawn "dms" "ipc" "call" "powermenu" "toggle";
+        }
+        Mod+Alt+L hotkey-overlay-title="Lock the Screen: dms-lock" {
+            spawn "dms" "ipc" "call" "lock" "lock";
         }
         Mod+G hotkey-overlay-title="Toggle Gaming Mode (start/stop kanata)" {
             spawn-sh "$HOME/scripts/toggle-gaming-mode.sh";
         }
 
         XF86AudioRaiseVolume allow-when-locked=true {
-            spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+";
+            spawn "dms" "ipc" "call" "audio" "increment" "5";
         }
         XF86AudioLowerVolume allow-when-locked=true {
-            spawn "${pkgs.wireplumber}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-";
+            spawn "dms" "ipc" "call" "audio" "decrement" "5";
         }
         XF86AudioMute allow-when-locked=true {
-            spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle";
+            spawn "dms" "ipc" "call" "audio" "mute";
         }
         XF86AudioMicMute allow-when-locked=true {
-            spawn "${pkgs.wireplumber}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle";
+            spawn "dms" "ipc" "call" "audio" "micmute";
         }
 
         XF86MonBrightnessUp allow-when-locked=true {
-            spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "10%+";
+            spawn "dms" "ipc" "call" "brightness" "increment" "10" "";
         }
         XF86MonBrightnessDown allow-when-locked=true {
-            spawn "${pkgs.brightnessctl}/bin/brightnessctl" "set" "10%-";
+            spawn "dms" "ipc" "call" "brightness" "decrement" "10" "";
         }
 
         Mod+O repeat=false { toggle-overview; }
@@ -277,19 +279,43 @@
         Mod+Shift+Ctrl+K     { move-column-to-monitor-up; }
         Mod+Shift+Ctrl+L     { move-column-to-monitor-right; }
 
-        Mod+Page_Down      { focus-workspace-down; }
-        Mod+Page_Up        { focus-workspace-up; }
-        Mod+U              { focus-workspace-down; }
-        Mod+I              { focus-workspace-up; }
-        Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
-        Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
-        Mod+Ctrl+U         { move-column-to-workspace-down; }
-        Mod+Ctrl+I         { move-column-to-workspace-up; }
+        Mod+Page_Down       { focus-workspace-down; }
+        Mod+Page_Up         { focus-workspace-up; }
+        Mod+I               { focus-workspace-down; }
+        Mod+U               { focus-workspace-up; }
+        Mod+Shift+Page_Down { move-column-to-workspace-down; }
+        Mod+Shift+Page_Up   { move-column-to-workspace-up; }
+        Mod+Shift+I         { move-column-to-workspace-down; }
+        Mod+Shift+U         { move-column-to-workspace-up; }
 
-        Mod+Shift+Page_Down { move-workspace-down; }
-        Mod+Shift+Page_Up   { move-workspace-up; }
-        Mod+Shift+U         { move-workspace-down; }
-        Mod+Shift+I         { move-workspace-up; }
+        Mod+Ctrl+Page_Down { move-workspace-down; }
+        Mod+Ctrl+Page_Up   { move-workspace-up; }
+        Mod+Ctrl+I         { move-workspace-down; }
+        Mod+Ctrl+U         { move-workspace-up; }
+
+        Mod+Shift+Ctrl+Alt+Left  { move-workspace-to-monitor-left; }
+        Mod+Shift+Ctrl+Alt+Down  { move-workspace-to-monitor-down; }
+        Mod+Shift+Ctrl+Alt+Up    { move-workspace-to-monitor-up; }
+        Mod+Shift+Ctrl+Alt+Right { move-workspace-to-monitor-right; }
+        Mod+Shift+Ctrl+Alt+H     { move-workspace-to-monitor-left; }
+        Mod+Shift+Ctrl+Alt+J     { move-workspace-to-monitor-down; }
+        Mod+Shift+Ctrl+Alt+K     { move-workspace-to-monitor-up; }
+        Mod+Shift+Ctrl+Alt+L     { move-workspace-to-monitor-right; }
+
+        Mod+WheelScrollDown      cooldown-ms=150 { focus-workspace-down; }
+        Mod+WheelScrollUp        cooldown-ms=150 { focus-workspace-up; }
+        Mod+Ctrl+WheelScrollDown cooldown-ms=150 { move-column-to-workspace-down; }
+        Mod+Ctrl+WheelScrollUp   cooldown-ms=150 { move-column-to-workspace-up; }
+
+        Mod+WheelScrollRight      { focus-column-right; }
+        Mod+WheelScrollLeft       { focus-column-left; }
+        Mod+Ctrl+WheelScrollRight { move-column-right; }
+        Mod+Ctrl+WheelScrollLeft  { move-column-left; }
+
+        Mod+Shift+WheelScrollDown      { focus-column-right; }
+        Mod+Shift+WheelScrollUp        { focus-column-left; }
+        Mod+Ctrl+Shift+WheelScrollDown { move-column-right; }
+        Mod+Ctrl+Shift+WheelScrollUp   { move-column-left; }
 
         Mod+1 { focus-workspace 1; }
         Mod+2 { focus-workspace 2; }
@@ -315,14 +341,14 @@
         Mod+Comma  { consume-or-expel-window-left; }
         Mod+Period { consume-or-expel-window-right; }
 
-        Mod+BracketLeft  { consume-or-expel-window-left; }
-        Mod+BracketRight { consume-or-expel-window-right; }
-
         Mod+R { switch-preset-column-width; }
         Mod+Shift+R { switch-preset-window-height; }
+        Mod+Ctrl+R { reset-window-height; }
         Mod+F { maximize-column; }
         Mod+Shift+F { fullscreen-window; }
+        Mod+Ctrl+F { expand-column-to-available-width; }
         Mod+C { center-column; }
+        Mod+Ctrl+C { center-visible-columns; }
 
         Mod+Minus { set-column-width "-10%"; }
         Mod+Equal { set-column-width "+10%"; }
@@ -345,10 +371,30 @@
         Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
 
         Mod+Shift+E { quit; }
-
-        Mod+Shift+P { power-off-monitors; }
+        Ctrl+Alt+Delete { quit; }
 
         Mod+Shift+Ctrl+T { toggle-debug-tint; }
+    }
+  '';
+
+  # Window rules
+  home.file.".config/niri/conf/windowrules.kdl".text = ''
+    window-rule {
+        match app-id="lxqt-policykit-agent"
+        open-floating true
+        default-column-width { fixed 400; }
+        default-window-height { fixed 200; }
+    }
+
+    window-rule {
+        match app-id="steam" title=r#"^notificationtoasts_\d+_desktop$"#
+        default-floating-position x=10 y=10 relative-to="bottom-right"
+    }
+  '';
+
+  # Animations
+  home.file.".config/niri/conf/animations.kdl".text = ''
+    animations {
     }
   '';
 }

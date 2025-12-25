@@ -34,6 +34,7 @@
     papirus-icon-theme
     qt6Packages.qt6ct
     adwaita-icon-theme
+    matugen
 
     # Others
     bitwarden-desktop
