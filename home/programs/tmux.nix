@@ -14,8 +14,6 @@
       sensible
       vim-tmux-navigator
       yank
-      resurrect
-      continuum
       {
         plugin = catppuccin;
         extraConfig = ''
@@ -23,6 +21,8 @@
           set -g @catppuccin_window_status_style "rounded"
         '';
       }
+      resurrect
+      continuum
     ];
 
     extraConfig = ''
@@ -80,6 +80,8 @@
       # Resurrect and continuum settings
       set -g @resurrect-capture-pane-contents 'on'
       set -g @continuum-restore 'on'
+      set -g @continuum-boot 'on'
+      set -g @continuum-systemd-start-cmd 'start-server'
     '';
   };
 }
