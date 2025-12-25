@@ -11,14 +11,20 @@
 
     scripts = {
       url = "github:ruben-hutter/scripts";
-      flake = false;  # Not a flake, just a source repository
+      flake = false;
+    };
+
+    dms = {
+      url = "github:AvengeMedia/DankMaterialShell/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, scripts, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, scripts, dms, ... }@inputs: {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixos
 
@@ -27,7 +33,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ruben = import ./home;
-            home-manager.extraSpecialArgs = { inherit scripts; };
+            home-manager.extraSpecialArgs = { inherit scripts dms; };
           }
         ];
       };

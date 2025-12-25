@@ -35,6 +35,11 @@
         opacity 0.9
     }
 
+    layer-rule {
+        match namespace="^quickshell$"
+        place-within-backdrop true
+    }
+
     // Specific window rules
     window-rule {
         match app-id="lxqt-policykit-agent"
@@ -200,7 +205,7 @@
             spawn "${pkgs.alacritty}/bin/alacritty";
         }
         Mod+Shift+Return hotkey-overlay-title="Open a File Manager: nautilus" {
-            spawn "${pkgs.gnome-file-manager}/bin/nautilus";
+            spawn "${pkgs.nautilus}/bin/nautilus";
         }
         Mod+G hotkey-overlay-title="Toggle Gaming Mode (start/stop kanata)" {
             spawn-sh "$HOME/scripts/toggle-gaming-mode.sh";

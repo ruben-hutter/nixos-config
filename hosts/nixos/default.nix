@@ -15,6 +15,7 @@
     # Desktop environment
     #../../modules/desktop/gnome.nix
     ../../modules/desktop/niri.nix
+    ../../modules/desktop/dms.nix
     ../../modules/desktop/sound.nix
     ../../modules/desktop/fonts.nix
 

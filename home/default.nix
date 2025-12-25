@@ -12,6 +12,7 @@
     ./programs/tmux.nix
     ./programs/neovim.nix
     ./programs/niri.nix
+    ./programs/dms.nix
   ];
 
   home.username = "ruben";

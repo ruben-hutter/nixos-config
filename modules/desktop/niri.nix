@@ -1,6 +1,19 @@
 { config, pkgs, lib, ... }:
 
 {
+  # Enable X server (required even for Wayland)
+  services.xserver.enable = true;
+
+  # Display manager
+  services.displayManager = {
+    defaultSession = "niri";
+    sessionPackages = [ pkgs.niri ];
+  };
+  services.displayManager.gdm = {
+    enable = true;
+    wayland = true;
+  };
+
   # Enable niri compositor
   programs.niri.enable = true;
 
@@ -20,8 +33,8 @@
     config.common.default = "*";
   };
 
-  # Display manager to launch niri
-  services.displayManager.sessionPackages = [ pkgs.niri ];
+  # Printing
+  services.printing.enable = true;
 
   # Polkit authentication agent
   systemd.user.services.lxqt-policykit-agent = {

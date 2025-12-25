@@ -29,9 +29,15 @@
     unzip
     brightnessctl
 
+    # Themes and Icons
+    bibata-cursors
+    papirus-icon-theme
+    qt6Packages.qt6ct
+    adwaita-icon-theme
+
     # Others
     bitwarden-desktop
-    gnome-file-manager
+    nautilus
     firefox
     vlc
     libreoffice
