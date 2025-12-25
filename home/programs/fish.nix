@@ -94,6 +94,7 @@
   # PATH additions
   home.sessionPath = [
     "$HOME/.local/bin"
+    "$HOME/.cargo/bin"
     #"$HOME/go/bin"
     #"$HOME/.ghcup/bin"
     #"$HOME/.cabal/bin"
