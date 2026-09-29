@@ -31,12 +31,25 @@
       set-window-option -g window-style bg=terminal
       set-window-option -g window-active-style bg=terminal
 
-      # Environment PATH
+      set-environment -g COLORTERM truecolor
       set-environment -g PATH "$HOME/.local/bin:$PATH"
       set-environment -g PATH "$HOME/.cargo/bin:$PATH"
 
+      # Spawn pane commands (popups, new-window 'cmd', run-shell, ...) via bash -c:
+      # fast and minimal — never loads fish config (which runs two `pass`/gpg calls).
+      # Interactive panes (new windows/splits without a command) still get fish via
+      # default-command. NOTE: no `exec` prefix here! tmux-resurrect composes
+      # `cat <contents>; exec $(default-command)` when restoring pane contents —
+      # `exec exec fish` would kill the pane (bash: "exec: exec: not found").
+      set -g default-shell /run/current-system/sw/bin/bash
+      set -g default-command /run/current-system/sw/bin/fish
+
       # Renumber windows
       set -g renumber-windows on
+
+      # pass modified keys (Alt+Enter etc.) through to TUIs like pi
+      set -s extended-keys on
+      set -s extended-keys-format csi-u
 
       # Send prefix
       bind C-a send-prefix
@@ -66,7 +79,14 @@
 
       # Custom scripts
       bind i run-shell "tmux neww $HOME/scripts/cht.sh"
-      bind -n M-f run-shell "tmux display-popup -E -w 60% -h 60% $HOME/scripts/tmux_session_manager.sh"
+      bind -n M-f display-popup -E -w 60% -h 60% $HOME/scripts/tmux_session_manager.sh
+
+      # walrus time tracking via session lifecycle hooks (see tmux_walrus_hook.sh)
+      # -b: run in background so a slow walrus/pass call can never block tmux
+      set-hook -g client-session-changed "run-shell -b '$HOME/scripts/tmux_walrus_hook.sh'"
+      set-hook -g client-attached        "run-shell -b '$HOME/scripts/tmux_walrus_hook.sh'"
+      set-hook -g client-detached        "run-shell -b '$HOME/scripts/tmux_walrus_hook.sh'"
+      set-hook -g session-closed         "run-shell -b '$HOME/scripts/tmux_walrus_hook.sh'"
 
       # Status bar configuration
       set -g status-right-length 100

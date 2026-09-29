@@ -4,17 +4,10 @@
   # Enable X server (required even for Wayland)
   services.xserver.enable = true;
 
-  # Display manager
-  services.displayManager = {
-    defaultSession = "niri";
-    sessionPackages = [ pkgs.niri ];
-  };
-  services.displayManager.gdm = {
-    enable = true;
-    wayland = true;
-  };
+  # Display manager (Wayland-only since GNOME 50)
+  services.displayManager.gdm.enable = true;
 
-  # Enable niri compositor
+  # Enable niri compositor (also registers the niri GDM session)
   programs.niri.enable = true;
 
   # Required for niri to work properly
@@ -22,6 +15,9 @@
 
   # Xwayland support for X11 apps
   programs.xwayland.enable = true;
+
+  # Keyring for secrets (used by brave, teams-for-linux, ...)
+  services.gnome.gnome-keyring.enable = true;
 
   # XDG Desktop Portal for screen sharing, file pickers, etc.
   xdg.portal = {

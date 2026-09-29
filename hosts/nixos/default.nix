@@ -5,6 +5,10 @@
     # Hardware configuration
     ./hardware.nix
 
+    # QEMU VM guest integration (guest agent, clipboard, resolution).
+    # Remove when moving to bare metal.
+    ./guest.nix
+
     # Core system modules
     ../../modules/boot.nix
     ../../modules/networking.nix
@@ -15,9 +19,13 @@
     # Desktop environment
     ../../modules/desktop/niri.nix
     ../../modules/desktop/sound.nix
+    ../../modules/desktop/steam.nix
 
     # Services
+    ../../modules/services/dms.nix
     ../../modules/services/kanata.nix
+    ../../modules/services/blink1.nix
+    ../../modules/services/yubikey.nix
 
     # Virtualisation
     ../../modules/virtualisation.nix

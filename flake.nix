@@ -2,10 +2,14 @@
   description = "Ruben's NixOS configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    # nixos-unstable as the daily-driver base. Required because
+    # DankMaterialShell needs go >= 1.26 and quickshell >= 0.3, which the
+    # stable release lags behind on. Unstable is a rolling channel with
+    # basic QA and is widely used as a daily driver.
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -20,23 +24,28 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, scripts, dms, ... }@inputs: {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+  outputs = { self, nixpkgs, home-manager, scripts, dms, ... }@inputs:
+    let
+      system = "x86_64-linux";
+    in
+    {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        inherit system;
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixos
+
+          # Official DankMaterialShell system module (service, quickshell, polkit)
+          dms.nixosModules.dank-material-shell
 
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ruben = import ./home;
-            home-manager.extraSpecialArgs = { inherit scripts dms; };
+            home-manager.extraSpecialArgs = { inherit scripts; };
           }
         ];
       };
     };
-  };
 }

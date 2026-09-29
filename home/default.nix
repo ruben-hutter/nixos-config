@@ -1,19 +1,37 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
   imports = [
     ./packages.nix
     ./scripts.nix
+
     ./programs/git.nix
-    ./programs/alacritty.nix
+    ./programs/gpg.nix
+    ./programs/ssh.nix
     ./programs/bash.nix
     ./programs/fish.nix
     ./programs/starship.nix
     ./programs/tmux.nix
+    ./programs/alacritty.nix
     ./programs/neovim.nix
     ./programs/niri.nix
     ./programs/dms.nix
-    ./programs/matugen.nix
+    ./programs/gtk.nix
+    ./programs/qt.nix
+    ./programs/xdg.nix
+    ./programs/fastfetch.nix
+    ./programs/lazygit.nix
+    ./programs/btop.nix
+    ./programs/htop.nix
+    ./programs/zed.nix
+    ./programs/lf.nix
+
+    # User services
+    ./programs/kanata.nix
+    ./programs/cliphist.nix
+    ./programs/elephant.nix
+    ./programs/dsearch.nix
+    ./programs/blink1.nix
   ];
 
   home.username = "ruben";
@@ -22,6 +40,7 @@
 
   # === CURSOR THEME ===
   home.pointerCursor = {
+    enable = true;
     name = "Bibata-Modern-Ice";
     package = pkgs.bibata-cursors;
     size = 22;
