@@ -14,8 +14,12 @@ let
       owner = "todbot";
       repo = "blink1-tool";
       rev = "668e184807ed878fcf900628029e252070ec470c";
-      hash = "sha256-DuQjgBvHAwkbLddnou8lSd+fen561oOJ+jXPFaaWMJM=";
+      fetchSubmodules = true;
+      hash = "sha256-m3l6VtZtYemBvGvMjY4opnOhMKVTyYYg9M1+eVWyGTA=";
     };
+
+    # vendored Makefile CFLAGS trip nix hardening (-Wformat-security without -Wformat)
+    hardeningDisable = [ "format" ];
 
     nativeBuildInputs = [ pkgs.pkg-config ];
     buildInputs = [ pkgs.libusb1 ];

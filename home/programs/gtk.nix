@@ -22,6 +22,10 @@
       size = 11;
     };
 
+    # hm 25.11+: gtk4 no longer inherits the theme by default; keep the
+    # fedora behavior where gtk4 apps are themed too
+    gtk4.theme = config.gtk.theme;
+
     gtk3.extraConfig = {
       gtk-toolbar-style = "GTK_TOOLBAR_ICONS";
       gtk-toolbar-icon-size = "GTK_ICON_SIZE_LARGE_TOOLBAR";
