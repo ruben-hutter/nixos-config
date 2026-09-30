@@ -32,6 +32,7 @@
   outputs = { self, nixpkgs, home-manager, disko, scripts, dms, ... }@inputs:
     let
       system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
       # Shared wiring for all hosts. Everything host-specific lives in the
       # host's own directory: hardware.nix (generated), disko.nix (disk
       # layout), guest.nix (VM-only), plus host tweaks.
@@ -64,11 +65,26 @@
         # future: laptop = mkNixosSystem ./hosts/laptop;
       };
 
-      # Shortcuts: `sudo nix run .#disko` partitions+mounts the host's disk
+      # Shortcuts:
+      #   sudo nix run .#disko      partition + mount only
+      #   sudo nix run .#bootstrap  erase disk, partition, install from this flake
       packages.x86_64-linux.diskoScript = self.nixosConfigurations.nixos.config.system.build.diskoScript;
       apps.x86_64-linux.disko = {
         type = "app";
         program = "${self.nixosConfigurations.nixos.config.system.build.diskoScript}";
+      };
+      apps.x86_64-linux.bootstrap = {
+        type = "app";
+        program = "${pkgs.writeShellScript "bootstrap-nixos" ''
+          set -euo pipefail
+          host="nixos"
+          echo "This will ERASE the disk declared in hosts/''${host}/disko.nix"
+          echo "and install NixOS from this flake."
+          read -r -p "Type 'erase' to continue: " answer
+          [ "''${answer}" = "erase" ] || { echo "Aborted."; exit 1; }
+          ${self.nixosConfigurations.nixos.config.system.build.diskoScript}
+          nixos-install --flake "${self}#''${host}"
+        ''}";
       };
     };
 }
