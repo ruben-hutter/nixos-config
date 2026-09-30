@@ -63,5 +63,12 @@
         nixos = mkNixosSystem ./hosts/nixos;
         # future: laptop = mkNixosSystem ./hosts/laptop;
       };
+
+      # Shortcuts: `sudo nix run .#disko` partitions+mounts the host's disk
+      packages.x86_64-linux.diskoScript = self.nixosConfigurations.nixos.config.system.build.diskoScript;
+      apps.x86_64-linux.disko = {
+        type = "app";
+        program = "${self.nixosConfigurations.nixos.config.system.build.diskoScript}";
+      };
     };
 }
