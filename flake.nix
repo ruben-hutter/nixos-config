@@ -13,6 +13,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko/latest";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     scripts = {
       url = "github:ruben-hutter/scripts";
       flake = false;
@@ -24,7 +29,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, scripts, dms, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, disko, scripts, dms, ... }@inputs:
     let
       system = "x86_64-linux";
     in
@@ -34,6 +39,9 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./hosts/nixos
+
+          # Declarative disk partitioning
+          disko.nixosModules.default
 
           # Official DankMaterialShell system module (service, quickshell, polkit)
           dms.nixosModules.dank-material-shell

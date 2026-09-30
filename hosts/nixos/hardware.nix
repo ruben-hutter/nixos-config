@@ -2,8 +2,9 @@
 # and may be overwritten by future invocations. Please make changes
 # to /etc/nixos/configuration.nix instead.
 #
-# NOTE: this file is HOST-SPECIFIC. When moving to real hardware (laptop),
-# regenerate it with `nixos-generate-config` and replace this file.
+# NOTE 1: file systems and swap live in disko.nix, not here.
+# NOTE 2: host-specific. When moving to real hardware, regenerate the
+# initrd module lists for that machine.
 { config, lib, pkgs, modulesPath, ... }:
 
 {
@@ -15,21 +16,6 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/d688a7d3-3a9d-4c4b-917b-74488e1b5e56";
-      fsType = "ext4";
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/8DE7-23BF";
-      fsType = "vfat";
-      options = [ "fmask=0077" "dmask=0077" ];
-    };
-
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/673e49ed-13a6-44cc-8b80-8d1081dc4481"; }
-    ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }

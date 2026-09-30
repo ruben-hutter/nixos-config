@@ -5,6 +5,9 @@
     # Hardware configuration
     ./hardware.nix
 
+    # Declarative disk layout (applied by nixos-anywhere/disko)
+    ./disko.nix
+
     # QEMU VM guest integration (guest agent, clipboard, resolution).
     # Remove when moving to bare metal.
     ./guest.nix
