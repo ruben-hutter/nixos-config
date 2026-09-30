@@ -32,13 +32,15 @@
   outputs = { self, nixpkgs, home-manager, disko, scripts, dms, ... }@inputs:
     let
       system = "x86_64-linux";
-    in
-    {
-      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+      # Shared wiring for all hosts. Everything host-specific lives in the
+      # host's own directory: hardware.nix (generated), disko.nix (disk
+      # layout), guest.nix (VM-only), plus host tweaks.
+      # Adding a host: hosts/<name>/ + one line below.
+      mkNixosSystem = hostModule: nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs; };
         modules = [
-          ./hosts/nixos
+          hostModule
 
           # Declarative disk partitioning
           disko.nixosModules.default
@@ -54,6 +56,12 @@
             home-manager.extraSpecialArgs = { inherit scripts; };
           }
         ];
+      };
+    in
+    {
+      nixosConfigurations = {
+        nixos = mkNixosSystem ./hosts/nixos;
+        # future: laptop = mkNixosSystem ./hosts/laptop;
       };
     };
 }
