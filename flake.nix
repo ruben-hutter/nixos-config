@@ -84,6 +84,8 @@
           [ "''${answer}" = "erase" ] || { echo "Aborted."; exit 1; }
           ${self.nixosConfigurations.nixos.config.system.build.diskoScript}
           nixos-install --flake "${self}#''${host}"
+          # set the user's password too (nixos-install only asks for root)
+          nixos-enter --root /mnt -c "passwd ruben"
         ''}";
       };
     };
