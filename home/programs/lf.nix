@@ -3,6 +3,7 @@
 {
   programs.lf.enable = true;
 
-  # lf file manager; config ported verbatim (no home-manager module)
-  home.file.".config/lf/lfrc".source = ./assets/lfrc;
+  # lf file manager; config ported verbatim from fedora ~/.config/lf/lfrc
+  # (via the HM module - it owns .config/lf/lfrc when enable = true)
+  programs.lf.extraConfig = builtins.readFile ./assets/lfrc;
 }
