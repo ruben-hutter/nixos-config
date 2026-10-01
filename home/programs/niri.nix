@@ -2,6 +2,9 @@
 
 let
   niriConf = ./niri-conf;
+  # DMS-generated includes, seeded on first activation so niri starts
+  # before DMS ever wrote them (regenerated at runtime afterwards).
+  niriDmsAssets = ./assets/niri-dms;
 in
 {
   # niri config ported verbatim from the fedora dotfiles (kdl files are
@@ -18,7 +21,8 @@ in
     if [ ! -d "$DMS_DIR" ]; then
       $DRY_RUN_CMD mkdir -p "$DMS_DIR"
     fi
-    for f in ${niriConf}/../assets/niri-dms/*.kdl; do
+    for f in ${niriDmsAssets}/*.kdl; do
+      [ -e "$f" ] || continue
       name="$(basename "$f")"
       if [ ! -f "$DMS_DIR/$name" ]; then
         $DRY_RUN_CMD install -m 644 "$f" "$DMS_DIR/$name"
