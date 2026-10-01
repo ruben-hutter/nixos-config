@@ -83,9 +83,26 @@
           read -r -p "Type 'erase' to continue: " answer
           [ "''${answer}" = "erase" ] || { echo "Aborted."; exit 1; }
           ${self.nixosConfigurations.nixos.config.system.build.diskoScript}
-          nixos-install --flake "${self}#''${host}"
-          # set the user's password too (nixos-install only asks for root)
+          # --no-root-passwd: skip nixos-install's root prompt (it would run
+          # right after the long build phase); root gets ruben's hash below
+          # on request instead.
+          nixos-install --no-root-passwd --flake "${self}#''${host}"
+          echo
+          echo "Setting the password for 'ruben'."
           nixos-enter --root /mnt -c "passwd ruben"
+          read -r -p "Use the same password for root? [y/N] " answer
+          case "''${answer}" in
+            y|Y|yes|Yes)
+              # copy ruben's fresh sha-512 hash instead of asking twice
+              hash="$(nixos-enter --root /mnt -c "grep '^ruben:' /etc/shadow | cut -d: -f2")"
+              nixos-enter --root /mnt -c "echo 'root:''${hash}' | chpasswd -e"
+              echo "root: password set (same as ruben)."
+              ;;
+            *)
+              echo "root: left locked (no password login; ssh key access still works if declared)."
+              ;;
+          esac
+          echo "Done. You can reboot now."
         ''}";
       };
     };
