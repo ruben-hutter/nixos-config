@@ -58,9 +58,6 @@
       # zed's binary is called zeditor in nixpkgs
       zed = "zeditor";
 
-      # lazygit for the dotfiles config repo (bare repo in ~/.cfg)
-      conflg = "lazygit --git-dir $HOME/.cfg --work-tree $HOME";
-
       # Scripts
       tm = "~/scripts/tmux_session_manager.sh";
 
@@ -93,11 +90,6 @@
       # Generate gitignore from toptal API
       gi = ''
         curl -sL https://www.toptal.com/developers/gitignore/api/$argv
-      '';
-
-      # Manage the dotfiles bare repo (git --git-dir=~/.cfg --work-tree=$HOME)
-      config = ''
-        env GIT_DIR="$HOME/.cfg" GIT_WORK_TREE="$HOME" git $argv
       '';
 
       # Activate Python virtualenv
