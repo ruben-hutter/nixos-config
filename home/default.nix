@@ -9,6 +9,7 @@
     ./programs/gpg.nix
     ./programs/ssh.nix
     ./programs/bash.nix
+    ./programs/bat.nix
     ./programs/fish.nix
     ./programs/starship.nix
     ./programs/tmux.nix

@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
 {
+  # Install the nvim binary itself (the config is vendored below)
+  programs.neovim.enable = true;
+
   # Neovim config (lazy.nvim + ~30 lua plugin specs) is vendored into this
   # repo verbatim (home/programs/nvim/) and symlinked from the nix store.
   # Plugins themselves are still resolved at runtime by lazy.nvim, like on
