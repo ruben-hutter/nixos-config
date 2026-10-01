@@ -1,14 +1,32 @@
 { config, pkgs, lib, ... }:
 
 {
-  # Enable X server (required even for Wayland)
-  services.xserver.enable = true;
-
-  # Display manager (Wayland-only since GNOME 50)
-  services.displayManager.gdm.enable = true;
-
-  # Enable niri compositor (also registers the niri GDM session)
+  # Enable niri compositor (also registers the niri session)
   programs.niri.enable = true;
+
+  # Login via greetd, mirroring the fedora flow on real hardware:
+  #   LUKS unlock (console) -> straight into niri, no display manager.
+  # - initial_session auto-logs in ruben right after boot/unlock
+  # - default_session (tuigreet) takes over after logout or session crash
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd niri-session";
+        user = "greeter";
+      };
+      initial_session = {
+        command = "${pkgs.niri}/bin/niri-session";
+        user = "ruben";
+      };
+    };
+  };
+
+  # Unlock gnome-keyring on password logins through tuigreet
+  security.pam.services.greetd.enableGnomeKeyring = true;
+
+  # niri spawns xwayland-satellite for X11 apps; it looks it up on PATH
+  environment.systemPackages = [ pkgs.xwayland-satellite ];
 
   # Required for niri to work properly
   security.polkit.enable = true;
