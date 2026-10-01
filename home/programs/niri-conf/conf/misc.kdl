@@ -65,6 +65,8 @@ overview {
 }
 
 xwayland-satellite {
+    // store path substituted at build time (see home/programs/niri.nix);
+    // /usr/bin does not exist on nixos
     path "/usr/bin/xwayland-satellite"
 }
 
