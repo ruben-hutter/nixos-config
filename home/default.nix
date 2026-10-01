@@ -18,6 +18,7 @@
     ./programs/niri.nix
     ./programs/dms.nix
     ./programs/gtk.nix
+    ./programs/haskell.nix
     ./programs/qt.nix
     ./programs/xdg.nix
     ./programs/fastfetch.nix

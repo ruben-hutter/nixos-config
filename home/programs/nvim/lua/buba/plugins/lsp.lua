@@ -27,12 +27,14 @@ return {
 				capabilities = require('cmp_nvim_lsp').default_capabilities(),
 			})
 
-			-- ghcup's HLS is ABI-matched with ghcup's GHC (mason's HLS is NOT -
-			-- different bindists). Use the versioned binary directly: the wrapper
-			-- would resolve haskell-language-server-9.10.3 from PATH, where
-			-- mason's incompatible one shadows ghcup's inside nvim.
+			-- On fedora, ghcup's HLS was used (ABI-matched with ghcup's GHC).
+			-- On nix, haskell-language-server comes from nixpkgs (see
+			-- home/programs/haskell.nix) and is built against the same GHC as
+			-- pkgs.ghc, so the plain PATH binary is already ABI-correct.
+			-- 'hls' is NOT in mason's ensure_installed, so mason's
+			-- incompatible build never shadows it inside nvim.
 			vim.lsp.config('hls', {
-				cmd = { vim.fn.expand('~/.ghcup/bin/haskell-language-server-9.10.3'), '--lsp' },
+				cmd = { 'haskell-language-server', '--lsp' },
 			})
 
 			-- make lua_ls aware of the `vim` global
