@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Bootstrap NixOS from this flake on a fresh machine (nixos-minimal ISO):
 #
-#   git clone -b feat/port-fedora-configs https://github.com/ruben-hutter/nixos-config.git
+#   git clone https://github.com/ruben-hutter/nixos-config.git
 #   cd nixos-config
 #   sudo bash bootstrap.sh
 #
