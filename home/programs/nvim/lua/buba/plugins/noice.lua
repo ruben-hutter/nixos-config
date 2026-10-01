@@ -21,6 +21,18 @@ return {
                 view = "notify",
                 filter = { event = "msg_showmode" },
             },
+            {
+                # Nvim 0.12 deprecation spam from plugins pinned for 0.11
+                # (nvim-colorizer tbl_flatten, archived nvim-treesitter
+                # master vim.validate). Filtered only as notifications;
+                # :checkhealth vim.deprecated still lists them.
+                filter = {
+                    event = "notif",
+                    warning = true,
+                    find = "is deprecated",
+                },
+                opts = { skip = true },
+            },
         },
     },
     dependencies = {
