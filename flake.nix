@@ -33,6 +33,18 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+
+      # Standalone home-manager config for NON-NixOS remote hosts, provisioned
+      # by code-remote. The host writes home/remote-user.nix (see
+      # home/remote-default.nix) before activation. Exposed as homeConfigurations
+      # `remote` (x86_64-linux) and `remote-aarch64` — dot-free names because
+      # dots in attr names clash with `nix build .#...` attr-path parsing.
+      mkRemoteHome = system: home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = { inherit scripts; };
+        modules = [ ./home/remote-default.nix ];
+      };
+
       # Shared wiring for all hosts. Everything host-specific lives in the
       # host's own directory: hardware.nix (generated), disko.nix (disk
       # layout), guest.nix (VM-only), plus host tweaks.
@@ -63,6 +75,12 @@
       nixosConfigurations = {
         nixos = mkNixosSystem ./hosts/nixos;
         # future: laptop = mkNixosSystem ./hosts/laptop;
+      };
+
+      homeConfigurations = {
+        # x86_64 is the common case, so it gets the short name
+        remote = mkRemoteHome "x86_64-linux";
+        remote-aarch64 = mkRemoteHome "aarch64-linux";
       };
 
       # Shortcuts:
