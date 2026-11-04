@@ -10,19 +10,18 @@
     yubikey-manager
     gh
 
-    # Language toolchains (installer-managed tools like ghcup/juliaup
-    # replaced by nix-managed toolchains)
+    # Language toolchains
     gcc
     lua
-    nodejs # pi is installed via: npm install -g --prefix ~/.local @earendil-works/pi-coding-agent
+    nodejs
     python3
-    rustup # walrus is cargo-installed from the private fork
+    rustup
     go
-    tree-sitter # nvim treesitter parser compilation
+    tree-sitter
     ghc
     cabal-install
     haskell-language-server
-    conda # package manager for envs (miniconda was removed from nixpkgs over Anaconda licensing)
+    conda
 
     # === UTILITIES ===
     htop
@@ -53,12 +52,10 @@
     vlc
     nautilus
     evince
-    file-roller
     bitwarden-desktop
     signal-desktop
     threema-desktop
     teams-for-linux
-    newsflash
 
     # === THEMES, ICONS, CURSORS, FONTS ===
     bibata-cursors
