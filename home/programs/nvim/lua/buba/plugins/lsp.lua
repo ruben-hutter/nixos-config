@@ -8,17 +8,19 @@ return {
 			-- project GHCs. On nix machines HLS comes from nixpkgs
 			-- (home/programs/haskell.nix), ABI-matched with pkgs.ghc and already
 			-- on PATH; mason's bindist never enters the picture.
+			-- NOTE: no 'gopls'/'nil_ls' here either — mason compiles them with
+			-- go/cargo. They come from nixpkgs instead (home.packages here and in
+			-- code-remote's remote profile), so lean hosts without those
+			-- toolchains don't get a failing install on every startup.
 			'bashls',        -- bash
 			'pyright',       -- python
 			'rust_analyzer', -- rust
 			'clangd',        -- c / c++
-			'gopls',         -- go
 			'lua_ls',        -- lua
 			'ts_ls',         -- javascript / typescript
 			'html',          -- html
 			'cssls',         -- css
 			'tinymist',      -- typst (was configured before)
-			'nil_ls',        -- nix
 		},
 	}},
 

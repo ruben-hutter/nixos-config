@@ -17,6 +17,9 @@
     python3
     rustup
     go
+    gopls # go LSP — nixpkgs, not mason (mason builds it with go; lean
+          # hosts without the toolchain would fail on every startup)
+    nil # nix LSP — same story (mason builds it with cargo)
     tree-sitter
     ghc
     cabal-install
