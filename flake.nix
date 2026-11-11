@@ -23,6 +23,12 @@
       flake = false;
     };
 
+    # live desktop dotfiles (fedora branch) — nvim config single source of truth
+    cfg = {
+      url = "github:ruben-hutter/.cfg";
+      flake = false;
+    };
+
     dms = {
       url = "github:AvengeMedia/DankMaterialShell/stable";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,7 +36,7 @@
   };
 
   outputs =
-    { self, nixpkgs, home-manager, disko, scripts, dms }@inputs:
+    { self, nixpkgs, home-manager, disko, scripts, cfg, dms }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -56,7 +62,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ruben = import ./home;
-            home-manager.extraSpecialArgs = { inherit scripts; };
+            home-manager.extraSpecialArgs = { inherit scripts cfg; };
           }
         ];
       };

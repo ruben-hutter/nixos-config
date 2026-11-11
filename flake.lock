@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "cfg": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1794416624,
+        "narHash": "sha256-ZUga1UIyeti39YGXWOAl03E1N3DOMNGvtIeNGZSHCjk=",
+        "owner": "ruben-hutter",
+        "repo": ".cfg",
+        "rev": "2e1ee9d2b5feb1afcf276c443fbaf9dbbca65ac8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ruben-hutter",
+        "repo": ".cfg",
+        "type": "github"
+      }
+    },
     "dank-qml-common": {
       "flake": false,
       "locked": {
@@ -115,6 +131,7 @@
     },
     "root": {
       "inputs": {
+        "cfg": "cfg",
         "disko": "disko",
         "dms": "dms",
         "home-manager": "home-manager",
